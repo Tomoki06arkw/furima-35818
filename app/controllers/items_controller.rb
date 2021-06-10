@@ -1,15 +1,9 @@
 class ItemsController < ApplicationController
-  # before_action :authenticate_user!, except: [:index]
-  def index
-  end
-  def new
-  end
-  def create
-  end
+  before_action :authenticate_user!, except: [:index]
+    def index
+    end
 
-
-  private
-  
-  def item_params
-    params.require(:item).permit(:image)
+    def new
+    end
+    
 end
