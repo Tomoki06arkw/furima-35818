@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe Item, type: :model do
   before do
     @item = FactoryBot.build(:item)      
-  end
+  end 
+  describe '出品機能' do
     context '出品がうまくいかない時' do
       it 'Imageが空では登録できない' do
         @item.image = ''
@@ -51,4 +52,5 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include "Price can't be blank"
       end
     end
+  end
 end
