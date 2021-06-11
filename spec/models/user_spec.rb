@@ -12,9 +12,6 @@ RSpec.describe User, type: :model do
       it "Nicknameが6文字以下で登録できる" do
         expect(@user).to be_valid
       end
-      it "Passwordが6文字以上であれば登録できる" do
-        expect(@user).to be_valid
-      end
     end
 
     context '新規登録が上手くいかない時' do

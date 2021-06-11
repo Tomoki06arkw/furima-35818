@@ -5,6 +5,15 @@ RSpec.describe Item, type: :model do
     @item = FactoryBot.build(:item)      
   end 
   describe '出品機能' do
+    context '出品がうまくいく時' do
+      it '全ての情報があるときうまくいく' do
+        expect(@item).to be_valid
+      end
+      it 'Category_id, Condition_id, Fee_id, Area_id, Delivery_idが１以上であれば登録できる' do
+        expect(@item).to be_valid
+      end
+    end
+
     context '出品がうまくいかない時' do
       it 'Imageが空では登録できない' do
         @item.image = nil
