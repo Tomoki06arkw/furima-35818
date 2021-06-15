@@ -1,4 +1,5 @@
 class PurchasesController < ApplicationController
+  skip_before_action :verify_authenticity_token
   def index
     @purchase_shipping_address = PurchaseShippingAddress.new
   end
