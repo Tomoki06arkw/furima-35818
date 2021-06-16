@@ -8,7 +8,7 @@ class PurchaseShippingAddress
       validates :prefecture_id, numericality: {other_than: 0, message: "can't be blank"}
       validates :city
       validates :address
-      validates :phone_number, format: {with: /\A0[5789]0[-]?\d{4}[-]?\d{4}\z/, message: "Phone number is invalid"}
+      validates :phone_number, format: {with: /\A\d{10,11}\z/, message: "Phone number is invalid"}
       validates :user_id
       validates :item_id
       validates :token
