@@ -1,5 +1,6 @@
 class PurchasesController < ApplicationController
-  skip_before_action :verify_authenticity_token
+before_action :set_item, only: [:create]
+
   def index
     @purchase_shipping_address = PurchaseShippingAddress.new
   end
@@ -7,6 +8,7 @@ class PurchasesController < ApplicationController
   def create
     @purchase_shipping_address = PurchaseShippingAddress.new(purchase_params)
     if @purchase_shipping_address.valid?
+      set_pay
       @purchase_shipping_address.save
       redirect_to root_path
     else
@@ -16,6 +18,19 @@ class PurchasesController < ApplicationController
 
   private
   def purchase_params
-  params.require(:purchase_shipping_address).permit(:postal_code, :prefecture_id, :city, :address, :building, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id])
+  params.require(:purchase_shipping_address).permit(:postal_code, :prefecture_id, :city, :address, :building, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
+  end
+
+  def set_item
+    @item = Item.find(params[:item_id])
+  end
+
+  def set_pay
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp::Charge.create(
+      amount: @item.price,
+      card: purchase_params[:token],
+      currency: 'jpy'
+    )
   end
 end
