@@ -4,7 +4,7 @@ before_action :set_item, only: [:index, :create]
 
   def index
     @purchase_shipping_address = PurchaseShippingAddress.new
-    if current_user.id == @item.user_id
+    if @item.purchase.id == @item.id
       redirect_to root_path
     end
   end
