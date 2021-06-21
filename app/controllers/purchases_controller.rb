@@ -2,7 +2,6 @@ class PurchasesController < ApplicationController
 before_action :authenticate_user!, only: [:index]
 before_action :set_item, only: [:index, :create]
 before_action :set_id, only: [:index, :create]
-before_action :move_to_index, only: [:index]
 
   def index
     @purchase_shipping_address = PurchaseShippingAddress.new
@@ -40,13 +39,7 @@ before_action :move_to_index, only: [:index]
   end
   
   def set_id
-    if current_user.id == @item.user_id || @item.purchase == ''
-      redirect_to root_path
-    end
-  end
-
-  def move_to_index
-    unless @item.user.id == current_user.id || @item.purchase == nil
+    if current_user.id == @item.user_id || @item.purchase.present?
       redirect_to root_path
     end
   end
